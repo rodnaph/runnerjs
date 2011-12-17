@@ -1,6 +1,6 @@
 {
     "name": "runnerjs",
-    "version": "0.1",
+    "version": "0.1.0",
     "description": "Simple function chaining for handling async callbacks",
     "homepage": "http://github.com/rodnaph/runnerjs"
 }
