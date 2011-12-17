@@ -45,6 +45,8 @@ Runner.prototype = {
 
 };
 
+exports.Runner = Runner;
+
 exports.make = function() {
 
     return new Runner();
