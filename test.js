@@ -64,3 +64,13 @@ runTest( 'Callback is called with error when a function calls an error', functio
     });
 });
 
+runTest( 'Callback gets no error when all goes ok', function() {
+    var runner = require( './index' ).make();
+    runner.run([
+        function( next ) { next(null,'foo'); },
+    ],
+    function( err, foo ) {
+        assert.ok( !err );
+    });
+});
+

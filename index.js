@@ -29,7 +29,7 @@ Runner.prototype = {
             if ( err || !func ) {
                 callback.apply( 
                     this, 
-                    err ? [err] : args
+                    [ err ].concat( args )
                 );
             }
 
