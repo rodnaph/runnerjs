@@ -74,3 +74,22 @@ runTest( 'Callback gets no error when all goes ok', function() {
     });
 });
 
+runTest( 'Seeds are available via seeds property', function() {
+    var runner = require( './index' ).make();
+    runner.run([
+            function( next ) {
+                assert.equal( 'bar', next.seeds[0] );
+            }
+        ],
+        function() {},
+        [ 'bar' ]
+    );
+});
+
+runTest( 'Seeds property is empty by default', function() {
+    var runner = require( './index' ).make();
+    runner.run([
+        function( next ) { assert.equal(0,next.seeds.length); }
+    ]);
+});
+

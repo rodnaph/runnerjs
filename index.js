@@ -39,6 +39,7 @@ Runner.prototype = {
 
         };
 
+        next.seeds = seeds || [];
         next.apply( this, [false].concat(seeds) );
 
     }
