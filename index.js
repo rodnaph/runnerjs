@@ -25,16 +25,12 @@ Runner.prototype = {
 
         var next = function( err ) {
 
-            var args = Array.prototype.slice.call( arguments );
-
             if ( err || !functions.length ) {
-                callback.apply( 
-                    this, 
-                    [ err ].concat( args )
-                );
+                callback.apply( this, arguments );
             }
 
             else {
+                var args = Array.prototype.slice.call( arguments );
                 functions.shift()
                          .apply( this, [next].concat(args.slice(1)) );
             }
@@ -67,7 +63,7 @@ Runner.prototype = {
             else {
                 func.apply( 
                     this, 
-                    [ chain, data.shift()]
+                    [ chain, data.shift() ]
                         .concat( seeds )
                 );
             }

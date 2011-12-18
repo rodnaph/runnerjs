@@ -26,6 +26,16 @@ runTest( 'Chain stops when a function passes an error to its callback', function
     assert.equal( 0, x );
 });
 
+runTest( 'Completion function gets result of last function in chain', function() {
+    var runner = require( './index' ).make();
+    runner.run(
+        [ function(next) { next(false,'foo'); } ],
+        function( err, foo ) {
+            assert.equal( 'foo', foo );
+        }
+    );
+});
+
 runTest( 'First function can receive seed arguments', function() {
     var runner = require( './index' ).make();
     var bar = 'asdasd';
