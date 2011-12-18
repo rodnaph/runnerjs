@@ -28,3 +28,12 @@ Completion Function
 The second argument to run() is the completion function.  This will be called either then the
 last function in the chain completes, or when an error occurs.
 
+Installation
+------------
+
+RunnerJS can be installed through NPM.
+
+<pre>
+npm install runnerjs
+</pre>
+
