@@ -93,3 +93,46 @@ runTest( 'Seeds property is empty by default', function() {
     ]);
 });
 
+runTest( 'Map calls all functions in chain', function() {
+    var runner = require( './index' ).make();
+    var x = 0;
+    runner.map(
+        [1,2],
+        function( callback ) { x++; callback(); }
+    );
+    assert.equal( 2, x );
+});
+
+runTest( 'Map passes each data item to function in chain', function() {
+    var runner = require( './index' ).make();
+    var x = 0;
+    runner.map(
+        [ 2, 3, 5 ],
+        function( callback, y ) { x += y; callback(); }
+    );
+    assert.equal( 10, x );
+});
+
+runTest( 'Map stops when function passes error to callback', function() {
+    var runner = require( './index' ).make();
+    var x = 0;
+    runner.map( [0,1,0], function(callback,y) {
+        if ( y ) { callback('error'); }
+        else {
+            x += 5; callback();
+        }
+    });
+    assert.equal( 5, x );
+});
+
+runTest( 'Callback is executed after all functions complete in map', function() {
+    var runner = require( './index' ).make();
+    var called = false;
+    runner.map(
+        [ 1, 2 ],
+        function( next ) { next(); },
+        function() { called=true; }
+    );
+    assert.ok( called );
+});
+

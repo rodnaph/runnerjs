@@ -7,7 +7,8 @@ Runner.prototype = {
      * Specify abilities for Binder
      */
     can: [
-        'runnerChain:run'
+        'runnerChain:run',
+        'runnerMap:map'
     ],
 
     /**
@@ -23,10 +24,9 @@ Runner.prototype = {
 
         var next = function( err ) {
 
-            var func = functions.shift();
             var args = Array.prototype.slice.call( arguments );
 
-            if ( err || !func ) {
+            if ( err || !functions.length ) {
                 callback.apply( 
                     this, 
                     [ err ].concat( args )
@@ -34,13 +34,46 @@ Runner.prototype = {
             }
 
             else {
-                func.apply( this, [next].concat(args.slice(1)) );
+                functions.shift()
+                         .apply( this, [next].concat(args.slice(1)) );
             }
 
         };
 
         next.seeds = seeds || [];
         next.apply( this, [false].concat(seeds) );
+
+    },
+
+    /**
+     * Maps the results of a function to a chain of functions
+     *
+     * @param Array data
+     * @param Function func
+     * @param Function callback
+     * @param Arrat seeds
+     */
+    map: function( data, func, callback, seeds ) {
+
+        callback = callback || function() {};
+
+        var chain = function( err ) {
+
+            if ( err || !data.length ) {
+                callback( err );
+            }
+
+            else {
+                func.apply( 
+                    this, 
+                    [ chain, data.shift()]
+                        .concat( seeds )
+                );
+            }
+
+        };
+
+        chain();
 
     }
 
