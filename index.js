@@ -5,6 +5,7 @@ Runner.prototype = {
 
     /**
      * Specify abilities for Binder
+     * http://github.com/rodnaph/binder
      */
     can: [
         'runnerChain:run',
