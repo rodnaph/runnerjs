@@ -146,3 +146,14 @@ runTest( 'Callback is executed after all functions complete in map', function() 
     assert.ok( called );
 });
 
+runTest( 'Map accumulates the callbacks non error arguments and gives them to the completion function', function() {
+    var runner = require( './index' ).make();
+    runner.map( [3,5], function(callback,x) {
+        callback( false, x );
+    }, function(err,acc) {
+        assert.equal( 2, acc.length );
+        assert.equal( 3, acc[0] );
+        assert.equal( 5, acc[1] );
+    });
+});
+

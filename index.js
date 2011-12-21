@@ -54,10 +54,13 @@ Runner.prototype = {
 
         callback = callback || function() {};
 
+        var acc = [];
         var chain = function( err ) {
 
+            acc = acc.concat( Array.prototype.slice.call(arguments).slice(1) );
+
             if ( err || !data.length ) {
-                callback( err );
+                callback.call( this, err, acc );
             }
 
             else {
